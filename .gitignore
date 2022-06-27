@@ -3,7 +3,7 @@ node_modules
 
 .history
 .svn
-
+package/*/dist/*
 # local env files
 .env.local
 .env.*.local
