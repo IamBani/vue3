@@ -9,7 +9,7 @@ const targets = fs.readdirSync("package").filter((ele) => {
 
 
 function build(target) {
-  execa("rollup", ["-c", "--environment", `TARGET:${target}`], {
+  execa("rollup", ["-c","-w", "--environment", `TARGET:${target}`], {
     stdio: "inherit",
   });
 }
