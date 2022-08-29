@@ -1,4 +1,5 @@
-import { isArray, isObject } from "package/shared/src";
+import { hasChanged, isArray, isObject } from "package/shared/src";
+import { TriggerOrTypes } from "package/shared/src/operators";
 
 export function effect(fn, option: any = {}) {
   const createEffectFn = createReactiveEffect(fn, option);
@@ -50,14 +51,15 @@ export function track(target, type, key) {
 export function trigger(target, type, key, value?, oldValue?) {
     // console.log(target, type, key, value, oldValue)
   console.log(targetMap, target, value, key);
+  let depsMap = targetMap.get(target)
+  if (!depsMap || !hasChanged(value,oldValue)) return
   let effects = new Set()
   const addEffects = (effect) => {
     effect.forEach(item => {
       effects.add(item)
     })
   };
-  let depsMap = targetMap.get(target)
-  if (!depsMap) return
+ 
   if (key === 'length' && isArray(target)) {
     depsMap.forEach((element,key) => {
       if (key === 'length') {
@@ -67,7 +69,13 @@ export function trigger(target, type, key, value?, oldValue?) {
   } else if (isObject(target) && depsMap.get(key)) {
     addEffects(depsMap.get(key));
   } else {
-    
+    switch (type) {
+      case TriggerOrTypes.ADD:
+        if (isArray(target) && key > target.length) {
+          addEffects(depsMap.get('length'))
+        }
+        break;
+    }
   }
-  effects.forEach((item:Function)=>item())
+  effects.forEach((item: Function) => item())
 }
