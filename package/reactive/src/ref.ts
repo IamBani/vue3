@@ -1,3 +1,8 @@
+import { hasChanged, isObject } from "package/shared/src";
+import { TrackOptypes, TriggerOrTypes } from "package/shared/src/operators";
+import { track, trigger } from "./effect";
+import { reactive } from "./reactive";
+
 declare const RefSymbol: unique symbol;
 
 export interface Ref<T = any> {
@@ -26,5 +31,34 @@ export interface Ref<T = any> {
 //     }
 //   : T;
 
+export function ref(value) {
+    return createRef(value)
+}
 
 
+export function showRef(value) {
+  return createRef(value,true)
+}
+
+function createRef(value,shallow = false) {
+  return new RefImpl(value,shallow)
+}
+const convert =(value)=>isObject(value)?reactive(value):value
+class RefImpl {
+  public _value;
+  public __v_isRef=true
+  constructor(public rawValue, public shallow) {
+    this._value = shallow ? rawValue : convert(rawValue);
+  }
+  get value() {
+    track(this, TrackOptypes.GET, 'value')
+    return this._value
+  }
+  set value(newValue) {
+    if (hasChanged(newValue, this.rawValue)) {
+      this.rawValue = newValue
+      this._value =this.shallow ? newValue:convert(newValue)
+      trigger(this, TriggerOrTypes.SET,'value',newValue);
+    }
+  }
+}

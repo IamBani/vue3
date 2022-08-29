@@ -13,23 +13,20 @@
         let app = document.getElementById('app')
         console.log(VueReactive)
 
-        let {reactive,readonly,shallowReactive,shallowReadonly,effect} = VueReactive
+        let {reactive,readonly,shallowReactive,shallowReadonly,effect,ref} = VueReactive
 
-        let s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6]})
-        s.name = 788
-        s.obj.cc = 232334
-        let a=0
+        // let s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6]})
+        let c = ref(false)
+        console.log(c);
         effect(()=>{
-          console.log(s,11223)
-            app.innerHTML = `我是${JSON.stringify(s)}，你是${s.obj.cc},${s.arr[2]}, `
+            app.innerHTML = `我是${typeof(c.value) ==="object"?JSON.stringify(c.value):c.value}, `
         })
         setTimeout(()=>{
-            s.name = '呵呵'
-            // s.obj.cc = '妮妮'
-            s.arr.length=2
-            s.arr.push(67)
-            
+            c.value = {
+                a:123
+            }            
         },2000)
+        
     </script>
 </body>
 </html>
