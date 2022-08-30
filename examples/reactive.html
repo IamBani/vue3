@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script src="../package/reactive/dist/reactive.global.js"></script>
     <div id="app"></div>
     <script>
-        let app = document.getElementById('app')
-        console.log(VueReactive)
+      let app = document.getElementById('app')
+      console.log(VueReactive)
 
-        let {reactive,readonly,shallowReactive,shallowReadonly,effect,ref} = VueReactive
+      let {
+        reactive,
+        readonly,
+        shallowReactive,
+        shallowReadonly,
+        effect,
+        ref,
+      } = VueReactive
 
-        // let s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6]})
-        let c = ref(false)
-        console.log(c);
-        effect(()=>{
-            app.innerHTML = `我是${typeof(c.value) ==="object"?JSON.stringify(c.value):c.value}, `
-        })
-        setTimeout(()=>{
-            c.value = {
-                a:123
-            }            
-        },2000)
-        
+      // let s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6]})
+      let c = ref({
+        a: 123,
+      })
+      console.log(c)
+      effect(() => {
+        app.innerHTML = `我是${
+          typeof c.value === 'object' ? JSON.stringify(c.value) : c.value
+        }, `
+      })
+      // setTimeout(() => {
+      //   c.value = false
+      // }, 2000)
     </script>
-</body>
+  </body>
 </html>
