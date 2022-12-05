@@ -1,6 +1,6 @@
 // import { UnwrapRefSimple, Ref } from "./ref";
 
-import { isObject } from "package/shared/src";
+import { isObject } from "@vue/shared";
 import { mutableHandlers, readonlyHandlers, shallowReactiveHandlers, shallowReadonlyHandlers } from "./baseHandles";
 
 

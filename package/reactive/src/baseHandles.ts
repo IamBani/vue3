@@ -1,5 +1,5 @@
-import { hasChanged, hasOwn, isArray, isIntegerKey, isObject } from "package/shared/src";
-import { TrackOptypes, TriggerOrTypes } from "package/shared/src/operators";
+import { hasChanged, hasOwn, isArray, isIntegerKey, isObject } from "@vue/shared";
+import { TrackOptypes, TriggerOrTypes } from "@vue/shared";
 import { track, trigger } from "./effect";
 import { reactive, readonly } from "./reactive";
 
@@ -13,7 +13,7 @@ const shallowSet = createSetter(true);
 
 
 function createGetter(isReadonly = false,shallow = false) {
-    return function get(target,key) {
+    return function get(target, key) {
         const res = Reflect.get(target, key)
         if (!isReadonly) {
             track(target,TrackOptypes.GET,key)

@@ -1,3 +1,5 @@
+export * from './operators'
+
 const isObject = (val) => typeof val === 'object' && val !== null
 
 const isNumber = (val) => typeof val === 'number'

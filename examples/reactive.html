@@ -13,20 +13,37 @@
         let app = document.getElementById('app')
         console.log(VueReactive)
 
-        let {reactive,readonly,shallowReactive,shallowReadonly,effect,ref} = VueReactive
-
-        // let s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6]})
+        let {reactive,readonly,shallowReactive,shallowReadonly,effect,ref,computed} = VueReactive
+        obj = {name:'shibowen'}
+        var s = reactive({name:123,obj:{cc:345},arr:[1,3,4,6,obj]})
+        aa = s.arr
         let c = ref(false)
-        console.log(c);
-        effect(()=>{
+        console.log(s);
+        let fn
+        fn = effect(()=>{
+            console.log(13232);
             app.innerHTML = `我是${typeof(c.value) ==="object"?JSON.stringify(c.value):c.value}, `
         })
         setTimeout(()=>{
             c.value = {
                 a:123
-            }            
+            }     
+            setTimeout(()=>{
+                fn.effect.stop()
+            },3000)   
+            setTimeout(()=>{
+                console.log('1222');
+                c.value = 4343433
+                fn()
+            },5000)    
         },2000)
-        
+       var com = computed(()=>{
+            return c.value
+        })
+        effect(()=>{
+            console.log(com.value);
+        })
+
     </script>
 </body>
 </html>

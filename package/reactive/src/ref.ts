@@ -1,5 +1,5 @@
-import { hasChanged, isObject } from "package/shared/src";
-import { TrackOptypes, TriggerOrTypes } from "package/shared/src/operators";
+import { hasChanged, isObject } from "@vue/shared";
+import { TrackOptypes, TriggerOrTypes } from "@vue/shared";
 import { track, trigger } from "./effect";
 import { reactive } from "./reactive";
 
